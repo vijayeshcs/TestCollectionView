@@ -15,12 +15,15 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     
     let cellIdentifier = "CustomCollectionViewCell"
+    var dataManager = GitDataManager()
     
+    var dataArrayForCell = [item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-       
+        dataManager.delegate = self
+        dataManager.fetchWeather(cityName: "tetris")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "CustomCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CustomCollectionViewCell")
@@ -36,21 +39,40 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 10
+        return dataArrayForCell.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CustomCollectionViewCell
         
-        cell.nameOfRepository.text = "123"
-        cell.login_Name.text = "456"
-        cell.size.text = "343"
+        cell.nameOfRepository.text = dataArrayForCell[indexPath.row].name
+        cell.login_Name.text =  dataArrayForCell[indexPath.row].owner.login
+        cell.size.text = String(dataArrayForCell[indexPath.row].size)
         
-        
+        if  dataArrayForCell[indexPath.row].has_wiki == true{
+                   cell.backgroundColor = UIColor.systemTeal
+               }else{
+                   cell.backgroundColor = UIColor.systemIndigo
+               }
         
         return cell
     }
 
 }
 
+extension ViewController: GitDataManagerDelegate {
+    func didUpdateData(_ dataManager: GitDataManager, dataModel: DataModel) {
+        DispatchQueue.main.async {
+        
+            self.dataArrayForCell = dataModel.arrOfGitData
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+         print(error)
+    }
+    
+
+}
