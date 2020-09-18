@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// Custom cell for UICollectionView . It is useful as we do not have to change the controller in storyboard or if there are too many element in the cell it gets messy in storyboard
 class CustomCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameOfRepository: UILabel!

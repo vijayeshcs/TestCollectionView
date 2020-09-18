@@ -8,6 +8,8 @@
 
 import Foundation
 
+// This file is used as a model for the MVC. It will create an array of data we need and connect with the controller
+
 struct DataModel {
     let arrOfGitData: [item]
 }

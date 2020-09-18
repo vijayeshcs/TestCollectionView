@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qCD-Ka-r0S">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qCD-Ka-r0S">
+                                <rect key="frame" x="0.0" y="98" width="414" height="793"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ixH-CQ-ynB">
                                     <size key="itemSize" width="128" height="128"/>
@@ -36,18 +36,35 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sC4-Eu-Eer">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" id="0mC-m7-bZd">
+                                        <rect key="frame" x="-87" y="-333" width="414" height="793"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="3RJ-qm-gWO"/>
+                                    <constraint firstAttribute="width" constant="240" id="N5T-i7-Qu0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="qCD-Ka-r0S" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0Lo-mR-DwM"/>
                             <constraint firstItem="qCD-Ka-r0S" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="AVa-TP-tG7"/>
-                            <constraint firstItem="qCD-Ka-r0S" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Lqk-au-A3Q"/>
-                            <constraint firstAttribute="bottom" secondItem="qCD-Ka-r0S" secondAttribute="bottom" id="tZ7-eu-dLe"/>
+                            <constraint firstItem="qCD-Ka-r0S" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Lqk-au-A3Q"/>
+                            <constraint firstItem="sC4-Eu-Eer" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pj6-7f-JWW"/>
+                            <constraint firstItem="sC4-Eu-Eer" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="izM-oj-Avn"/>
+                            <constraint firstAttribute="bottom" secondItem="qCD-Ka-r0S" secondAttribute="bottom" constant="5" id="tZ7-eu-dLe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="4TA-sE-NhA"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="0mC-m7-bZd" id="L9R-LH-jbr"/>
                         <outlet property="collectionView" destination="qCD-Ka-r0S" id="SEg-v1-aAD"/>
                         <outlet property="searchBar" destination="mHm-YM-Dhp" id="qto-0G-CBY"/>
                     </connections>

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+// This file is structured in a way we can directly decode our JSON file with the the data we need. It is part of our model in MVC structure
 struct GitData: Codable {
     let items: [item]
 }

@@ -8,11 +8,17 @@
 
 import Foundation
 
+// This is the networking file which will help to fetch the data from the api
+
+
+// The protocol is used to return back the data to the controller
 protocol GitDataManagerDelegate {
        func didUpdateData(_ dataManager: GitDataManager, dataModel: DataModel)
        func didFailWithError(error: Error)
    }
 
+
+// This struct is used for API calling and parsing JSON
 struct GitDataManager{
     
     let dataURL = "https://api.github.com/search/repositories?"
@@ -24,7 +30,7 @@ struct GitDataManager{
             performRequest(with: urlString)
         }
         
-        
+        // Api call made using NSURLSession
         func performRequest(with urlString: String) {
             if let url = URL(string: urlString) {
                 let session = URLSession(configuration: .default)
@@ -43,6 +49,7 @@ struct GitDataManager{
             }
         }
         
+        // JSON Parsing method
         func parseJSON(_ JsonData: Data) -> DataModel? {
             let decoder = JSONDecoder()
             do {
