@@ -49,9 +49,15 @@
                     <navigationItem key="navigationItem" id="4TA-sE-NhA"/>
                     <connections>
                         <outlet property="collectionView" destination="qCD-Ka-r0S" id="SEg-v1-aAD"/>
+                        <outlet property="searchBar" destination="mHm-YM-Dhp" id="qto-0G-CBY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" placeholder="Search for Repository" id="mHm-YM-Dhp">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="115.84821428571428"/>
         </scene>

@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate {
    
    
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -22,14 +23,28 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
         dataManager.delegate = self
-        dataManager.fetchWeather(cityName: "tetris")
+        dataManager.fetchJson(repoName: "tetris")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "CustomCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CustomCollectionViewCell")
         
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+           if self.searchBar.text != "" {
+            //self.activityIndictor.isHidden = false
+             //  self.activityIndictor.startAnimating()
+               dataManager.fetchJson(repoName: self.searchBar.text!)
+               searchBar.endEditing(true)
+           }
+       }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (self.view.frame.size.width - 20)
         let height = width //ratio
@@ -46,9 +61,9 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CustomCollectionViewCell
         
-        cell.nameOfRepository.text = dataArrayForCell[indexPath.row].name
-        cell.login_Name.text =  dataArrayForCell[indexPath.row].owner.login
-        cell.size.text = String(dataArrayForCell[indexPath.row].size)
+        cell.nameOfRepository.text = "Name of Repository: "+dataArrayForCell[indexPath.row].name
+        cell.login_Name.text =  "Login name: "+dataArrayForCell[indexPath.row].owner.login
+        cell.size.text = "Size: " + String(dataArrayForCell[indexPath.row].size)
         
         if  dataArrayForCell[indexPath.row].has_wiki == true{
                    cell.backgroundColor = UIColor.systemTeal

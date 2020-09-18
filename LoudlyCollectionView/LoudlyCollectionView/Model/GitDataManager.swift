@@ -19,8 +19,8 @@ struct GitDataManager{
     
         var delegate: GitDataManagerDelegate?
         
-        func fetchWeather(cityName: String) {
-            let urlString = "\(dataURL)q=\(cityName)"
+        func fetchJson(repoName: String) {
+            let urlString = "\(dataURL)q=\(repoName)"
             performRequest(with: urlString)
         }
         
@@ -43,10 +43,10 @@ struct GitDataManager{
             }
         }
         
-        func parseJSON(_ weatherData: Data) -> DataModel? {
+        func parseJSON(_ JsonData: Data) -> DataModel? {
             let decoder = JSONDecoder()
             do {
-                let decodedData = try decoder.decode(GitData.self, from: weatherData)
+                let decodedData = try decoder.decode(GitData.self, from: JsonData)
                 let item = decodedData.items
                 
                 
