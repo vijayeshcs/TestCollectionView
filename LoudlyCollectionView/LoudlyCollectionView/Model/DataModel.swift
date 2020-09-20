@@ -12,4 +12,5 @@ import Foundation
 
 struct DataModel {
     let arrOfGitData: [item]
+    let totalCount : Int
 }

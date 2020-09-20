@@ -14,7 +14,7 @@ import Foundation
 // The protocol is used to return back the data to the controller
 protocol GitDataManagerDelegate {
        func didUpdateData(_ dataManager: GitDataManager, dataModel: DataModel)
-       func didFailWithError(error: Error)
+       func didFailWithError(error: Error, message : String)
    }
 
 
@@ -25,8 +25,8 @@ struct GitDataManager{
     
         var delegate: GitDataManagerDelegate?
         
-        func fetchJson(repoName: String) {
-            let urlString = "\(dataURL)q=\(repoName)"
+        func fetchJson(repoName: String, pageCount: Int) {
+            let urlString = "\(dataURL)q=\(repoName)&page=\(pageCount)&per_page=10"
             performRequest(with: urlString)
         }
         
@@ -36,11 +36,12 @@ struct GitDataManager{
                 let session = URLSession(configuration: .default)
                 let task = session.dataTask(with: url) { (data, response, error) in
                     if error != nil {
-                        self.delegate?.didFailWithError(error: error!)
+                        self.delegate?.didFailWithError(error: error!, message: error!.localizedDescription)
                         return
                     }
                     if let safeData = data {
                         if let parsedJsonData = self.parseJSON(safeData) {
+                            print(parsedJsonData)
                             self.delegate?.didUpdateData(self, dataModel: parsedJsonData)
                         }
                     }
@@ -54,15 +55,14 @@ struct GitDataManager{
             let decoder = JSONDecoder()
             do {
                 let decodedData = try decoder.decode(GitData.self, from: JsonData)
-                let item = decodedData.items
-                
-                
-                let data = DataModel(arrOfGitData: item)
-                print(item)
+                let item = decodedData.self
+                let data = DataModel(arrOfGitData: item.items, totalCount: item.total_count)
                 return data
-                
             } catch {
-                delegate?.didFailWithError(error: error)
+                let json = NSString(data: JsonData, encoding: String.Encoding.utf8.rawValue)
+                print(json!)
+                //print(error)
+                delegate?.didFailWithError(error: error, message:json! as String)
                 return nil
             }
         }
